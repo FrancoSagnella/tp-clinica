@@ -1,0 +1,71 @@
+<main role="main">
+
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">Panel de Administrador</h1>
+      <div class="row">
+        <div class="col">
+          <p><a class="btn btn-primary btn-lg" role="button" >Dar de alta un administrador &raquo;</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 offset-1">
+        <!-- DESPUES TENGO QUE DIVIDIR ESTA LISTA EN TRES COMPONENTES DIFERENTES -->
+        <h2>Listado de Usuarios</h2>
+
+        <div>
+          <table class="table">
+              <tr>
+                  <td>
+                      Nombre
+                  </td>
+                  <td>
+                    Apellido
+                  </td>
+                  <td>
+                      DNI
+                  </td>
+                  <td>
+                    Edad
+                  </td>
+                  <td>
+                    Perfil
+                  </td>
+              </tr>
+              <tr *ngFor="let item of listaUsuarios">
+                  <td>
+                      {{item.nombre}}
+                  </td>
+                  <td>
+                      {{item.apellido}}
+                  </td>
+                  <td>
+                      {{item.dni}}
+                  </td>
+                  <td>
+                      {{item.edad}}
+                  </td>
+                  <td>
+                    {{item.perfil}}
+                  </td>
+                  <td>
+                    <button class="btn btn-primary" *ngIf="item.perfil != 'especialista'" disabled>Aprobar cuenta</button>
+                    <button class="btn btn-primary" *ngIf="item.perfil == 'especialista'" (click)="aprobarEspecialista(item)">Aprobar cuenta</button>
+                  </td>
+              </tr>
+          </table>
+        </div>
+
+
+      </div>
+
+    </div>
+
+    <hr>
+  </div> <!-- /container -->
+
+</main>

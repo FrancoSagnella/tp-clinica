@@ -1,0 +1,27 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-2"></div>
+      <div class="col-12 col-md-4" >
+        <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
+          <h2 class="form-signin-heading">Iniciá Sesión!</h2>
+          <input type="text" class="form-control" name="username" placeholder="Ingresá tu email" required="" autofocus="" formControlName="email" />
+          <input type="password" class="form-control" name="password" placeholder="Ingresá tu contraseña" required="" formControlName="password"/>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+          <br>
+        </form>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="form-signin">
+          <h2 class="form-signin-heading">Iniciá Rápido!</h2>
+            <div>
+              <p *ngFor="let usuario of users" (click)="seleccionarUsuario(usuario.mail, usuario.contrasenia)">{{usuario.mail}}</p>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-2"></div>
+
+    </div>
+  </div>
+</div>
+

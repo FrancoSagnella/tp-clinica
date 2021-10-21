@@ -1,0 +1,83 @@
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <h2>Alta de Especialista</h2>
+    </div>
+
+    <div class="row g-5">
+      <!--FORM-->
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Datos del Especialista</h4>
+        <form [formGroup]="formGroup" (ngSubmit)="enviar()">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Nombre</label>
+              <input type="text" class="form-control" formControlName="nombre" placeholder="Ingrese nombre">
+              <small *ngIf="formGroup.controls.nombre.errors?.required  && formGroup.controls.nombre.touched" class="invalid">El nombre es requerido</small>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Apellido</label>
+              <input type="text" class="form-control" formControlName="apellido" placeholder="Ingrese Apellido">
+              <small *ngIf="formGroup.controls.apellido.errors?.required && formGroup.controls.apellido.touched" class="invalid">El Apellido es requerido</small>
+            </div>
+
+            <div class="col-12">
+              <label for="username" class="form-label">Edad</label>
+              <input type="number" class="form-control" formControlName="edad" placeholder="Ingrese edad">
+              <small *ngIf="formGroup.controls.edad.errors?.required" class="invalid">La edad es requerido</small>
+              <small *ngIf="formGroup.controls.edad.errors?.min || formGroup.controls.edad.errors?.max" class="invalid">Debe estar entre 18 y 100</small>
+            </div>
+
+            <div class="col-12">
+              <label for="username" class="form-label">DNI</label>
+              <input type="number" class="form-control" formControlName="dni" placeholder="Ingrese DNI">
+              <small *ngIf="formGroup.controls.dni.errors?.required" class="invalid">El DNI es requerido</small>
+              <small *ngIf="formGroup.controls.dni.errors?.min || formGroup.controls.dni.errors?.max" class="invalid">Debe tener un rango numerico valido</small>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Email</label>
+              <input type="text" class="form-control" formControlName="mail" placeholder="Ingrese Email">
+              <small *ngIf="formGroup.controls.mail.errors?.required  && formGroup.controls.mail.touched" class="invalid">El Email es requerido</small>
+              <small *ngIf="formGroup.controls.mail.errors?.email" class="invalid">Debe ser un formato de mail valido</small>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" formControlName="contrasenia" placeholder="Ingrese Contraseña">
+              <small *ngIf="formGroup.controls.contrasenia.errors?.required && formGroup.controls.contrasenia.touched" class="invalid">La contrasenia es requerida</small>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Especialidad</label>
+              <input type="text" class="form-control" formControlName="especialidad" placeholder="Ingrese Especialidad">
+              <small *ngIf="formGroup.controls.especialidad.errors?.required  && formGroup.controls.especialidad.touched" class="invalid">La especialidad es requerida</small>
+            </div>
+            <!-- <div class="col-md-6 mb-3">
+              <label for="sexo" class="form-label">Obra Solcial</label>
+              <select class="form-control" formControlName="obraSocial">
+                <option value="">Seleccione uno</option>
+                <option value="pami">PAMI</option>
+                <option value="osecac">OSECAC</option>
+                <option value="ioma">IOMA</option>
+              </select>
+              <small *ngIf="formGroup.get('obraSocial')?.errors && formGroup.controls.obraSocial.touched" class="invalid">la Obra Social es requerida</small>
+            </div> -->
+
+            <div class="col-md-6 mb-3">
+              <label for="dni" class="form-label">Foto</label>
+              <input type="file" class="form-control" formControlName="foto" placeholder="Seleccione Foto" (change)="onSelecFoto($event)">
+              <small *ngIf="formGroup.controls.foto.errors?.required  && formGroup.controls.foto.touched" class="invalid">La foto es requerida</small>
+            </div>
+
+          <hr class="my-4">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="formGroup.invalid">
+            Aceptar
+          </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
