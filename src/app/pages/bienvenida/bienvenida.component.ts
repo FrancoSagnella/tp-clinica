@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-bienvenida',
@@ -8,23 +9,28 @@ import { Router } from '@angular/router';
 })
 export class BienvenidaComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private authSvc:AuthService) { }
 
   ngOnInit(): void {
   }
 
-  registrarPaciente()
+  misTurnos()
   {
-    this.router.navigateByUrl('auth/registro/paciente');
+    this.router.navigateByUrl('/users/misTurnos');
   }
 
-  registrarEspecialista()
+  turnos()
   {
-    this.router.navigateByUrl('auth/registro/especialista');
+    this.router.navigateByUrl('/admin/turnos');
   }
 
-  listaUsuarios()
+  solicitarTurno()
   {
-    this.router.navigateByUrl('admin/usuarios');
+    this.router.navigateByUrl('/users/solicitarTurno');
+  }
+
+  miPerfil()
+  {
+    this.router.navigateByUrl('/users/miPerfil');
   }
 }

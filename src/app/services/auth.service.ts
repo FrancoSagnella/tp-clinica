@@ -9,6 +9,8 @@ import { first } from 'rxjs/operators';
 
 export class AuthService {
 
+  public currentUser:any = null;
+
   constructor(public afAuth: AngularFireAuth){}
 
   async login(email:string, password:string)
@@ -26,6 +28,7 @@ export class AuthService {
   async logout(){
     try{
       await this.afAuth.signOut();
+      this.currentUser = null;
       return true;
     } catch (e:any) {
       console.log(e.code);
@@ -33,11 +36,13 @@ export class AuthService {
     }
   }
 
-  async register(email:string, password:string)
+  async register(email:string, password:string):Promise<any>
   {
     try{
       const result = await this.afAuth.createUserWithEmailAndPassword(email,password);
+      const resultMail =  (await this.afAuth.currentUser)?.sendEmailVerification();
       await this.afAuth.signOut();
+      console.log(resultMail);
       return result;
     }
     catch(e:any){

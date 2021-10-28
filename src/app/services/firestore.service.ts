@@ -23,7 +23,7 @@ export class FirestoreService {
   }
   //Obtiene un datos
   public obtenerById(collection:string, documentId: string) {
-    return this.firestore.collection(collection).doc(documentId).snapshotChanges();
+    return this.firestore.collection(collection).doc(documentId).get();
   }
   //Obtiene todos los datos
   public obtenerTodos(collection: string) {

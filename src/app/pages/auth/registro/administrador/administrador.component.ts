@@ -7,6 +7,9 @@ import { Admin } from 'src/app/clases/administrador';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
@@ -18,7 +21,10 @@ export class AdministradorComponent implements OnInit {
   foto:any;
   formGroup!:FormGroup;
 
-  constructor(private auth:AuthService, private fb:FormBuilder, private firestore:FirestoreService, private router:Router,private firestorage:AngularFireStorage, private afs:AngularFirestore) { }
+  // para el captcha
+  siteKey: string = '6LfXtPocAAAAAItVEVHGCmaeDIyjPpFMBm5fcl-Y';
+
+  constructor(private spinner:NgxSpinnerService, private auth:AuthService, private fb:FormBuilder, private firestore:FirestoreService, private router:Router,private firestorage:AngularFireStorage, private afs:AngularFirestore) { }
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
@@ -29,6 +35,8 @@ export class AdministradorComponent implements OnInit {
       'mail':['', [Validators.required, Validators.email]],
       'contrasenia':[''],
       'foto':[null, Validators.required],
+      'recaptcha' : ['', Validators.required],
+
     });
   }
 
@@ -47,23 +55,33 @@ export class AdministradorComponent implements OnInit {
     this.administrador.DNI = this.formGroup.controls.dni.value;
     this.administrador.mail = this.formGroup.controls.mail.value;
     this.administrador.contrasenia = this.formGroup.controls.contrasenia.value;
-
     // Agregar spinner
-    let pathRef = `fotos/`+this.administrador.nombre+this.administrador.DNI+`/1`;
-    const fileRef = this.firestorage.ref(pathRef);
-    const task = this.firestorage.upload(pathRef, this.foto);
+    this.spinner.show();
 
-    task.snapshotChanges().toPromise().then(() => {
-      fileRef.getDownloadURL().toPromise().then(response => {
+    this.auth.register(this.administrador.mail, this.administrador.contrasenia).then(user=>{
 
-            this.administrador.foto = response;
-            this.administrador.id = this.afs.createId();
+      let pathRef = `fotos/`+this.administrador.nombre+this.administrador.DNI+`/1`;
+      const fileRef = this.firestorage.ref(pathRef);
+      const task = this.firestorage.upload(pathRef, this.foto);
 
-            this.firestore.actualizar('usuarios', this.administrador.id, this.administrador).then(()=>{
-              // Agregar un SweetAlert
-              this.auth.register(this.administrador.mail, this.administrador.contrasenia);
-              this.router.navigate(['/bienvenida']);
-            });
+      task.snapshotChanges().toPromise().then(() => {
+        fileRef.getDownloadURL().toPromise().then(response => {
+
+              this.administrador.foto = response;
+              this.administrador.id = user.user.uid;
+
+              this.firestore.actualizar('usuarios', this.administrador.id, this.administrador).then(()=>{
+                // Agregar un SweetAlert
+                this.spinner.hide();
+                Swal.fire({
+                  title:'¡Bien!',
+                  text:'¡Usuario registrado exitosamente!',
+                  icon:'success',
+                  cancelButtonText:'Cerrar',
+                });
+                this.router.navigate(['/bienvenida']);
+              });
+        });
       });
     });
   }

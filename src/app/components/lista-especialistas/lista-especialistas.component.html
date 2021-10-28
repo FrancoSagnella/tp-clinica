@@ -1,0 +1,33 @@
+<h2>Especialistas</h2>
+
+        <div>
+          <table class="table">
+              <tr>
+                  <td>
+                      Nombre
+                  </td>
+                  <td>
+                    Apellido
+                  </td>
+                  <td>
+                      DNI
+                  </td>
+              </tr>
+              <tr *ngFor="let item of listaEspecialistas">
+                  <td>
+                      {{item.nombre}}
+                  </td>
+                  <td>
+                      {{item.apellido}}
+                  </td>
+                  <td>
+                      {{item.DNI}}
+                  </td>
+                  <td>
+                    <div class="row">
+                      <button class="btn btn-primary" *ngIf="!item.aprobado" (click)="manejarActivacion('activar', item)">Activar cuenta</button>
+                      <button class="btn btn-primary" *ngIf="item.aprobado" (click)="manejarActivacion('desactivar', item)">Desactivar cuenta</button>
+                    </div>
+                  </td>
+              </tr>
+          </table>

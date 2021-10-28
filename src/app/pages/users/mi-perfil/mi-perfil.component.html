@@ -1,0 +1,107 @@
+<main role="main">
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-6" style="text-align: center;">
+                <h1 class="display-3">Mi Perfil:</h1>
+                <h1>{{usuario.apellido}}, {{usuario.nombre}}</h1>
+            </div>
+            <div class="col-6" style="text-align: center;">
+                <img class="foto" [src]="usuario.foto" width="200px" height="200px">
+                <img style="margin-left: 50px;" *ngIf="usuario.perfil == 'paciente'" class="foto" [src]="usuario.foto2" width="200px" height="200px">
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class="row" *ngIf="usuario.perfil != 'especialista'">
+      <div class="col-12">
+        <h1>Datos de usuario:</h1>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="usuario.perfil == 'especialista'">
+      <div class="col-6">
+        <h1>Datos de usuario:</h1>
+      </div>
+      <div class="col-6">
+        <h1>Mis Horarios:</h1>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row" *ngIf="usuario.perfil != 'especialista'">
+        <div class="col-12">
+          <p>Nombre completo: {{usuario.nombre}} {{usuario.apellido}}</p>
+          <p>Edad: {{usuario.edad}}</p>
+          <p>DNI: {{usuario.DNI}}</p>
+          <p>Correo: {{usuario.mail}}</p>
+          <p *ngIf="usuario.perfil == 'paciente'">Obra Social: {{usuario.obraSocial}}</p>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="usuario.perfil == 'especialista'">
+        <div class="col-6">
+          <p>Nombre completo: {{usuario.nombre}} {{usuario.apellido}}</p>
+          <p>Edad: {{usuario.edad}}</p>
+          <p>DNI: {{usuario.DNI}}</p>
+          <p>Correo: {{usuario.mail}}</p>
+          <p>Especialidades:</p>
+          <ul>
+            <li *ngFor="let especialidad of usuario.especialidad">
+              {{especialidad}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-6">
+          <form class="row" [formGroup]="formGroup" (submit)="enviar()">
+            <div class="col-6">
+              <p>Dias disponible:</p>
+              <ul>
+                <li>
+                  Lunes <input type="checkbox" formControlName="lunes">
+                </li>
+                <li>
+                  Martes <input type="checkbox" formControlName="martes">
+                </li>
+                <li>
+                  Miercoles <input type="checkbox" formControlName="miercoles">
+                </li>
+                <li>
+                  Jueves <input type="checkbox" formControlName="jueves">
+                </li>
+                <li>
+                  Viernes <input type="checkbox" formControlName="viernes">
+                </li>
+                <li>
+                  Sabado <input type="checkbox" formControlName="sabado">
+                </li>
+              </ul>
+            </div>
+            <div class="col-6">
+              <label for="dni" class="form-label">Horario disponible</label>
+                <select class="form-control" formControlName="horario">
+                  <option value="">Seleccione uno</option>
+                  <option value="todo">Jornada completa (8:00 - 19:00)</option>
+                  <option value="maniana">Mañana (8:00 - 12:30)</option>
+                  <option value="tarde">Tarde (12:30 - 19:00)</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Confirmar Horarios
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <hr>
+  </div> <!-- /container -->
+
+</main>
+<ngx-spinner [type]="'ball-clip-rotate-multiple'"></ngx-spinner>

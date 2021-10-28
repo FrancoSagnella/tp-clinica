@@ -55,6 +55,13 @@
               <small *ngIf="formGroup.controls.foto.errors?.required  && formGroup.controls.foto.touched" class="invalid">La foto es requerida</small>
             </div>
 
+            <div class="col-md-6 mb-3">
+              <ngx-recaptcha2 #captchaElem
+                [siteKey]="siteKey"
+                formControlName="recaptcha">
+              </ngx-recaptcha2>
+            </div>
+
           <hr class="my-4">
           <button type="submit" class="btn btn-primary btn-block" [disabled]="formGroup.invalid">
             Aceptar
@@ -65,3 +72,4 @@
     </div>
   </main>
 </div>
+<ngx-spinner [type]="'ball-clip-rotate-multiple'"></ngx-spinner>

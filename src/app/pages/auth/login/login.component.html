@@ -14,9 +14,9 @@
       <div class="col-12 col-md-4">
         <div class="form-signin">
           <h2 class="form-signin-heading">Iniciá Rápido!</h2>
-            <div>
-              <p *ngFor="let usuario of users" (click)="seleccionarUsuario(usuario.mail, usuario.contrasenia)">{{usuario.mail}}</p>
-            </div>
+          <div>
+            <p *ngFor="let usuario of users" (click)="seleccionarUsuario(usuario.mail, usuario.contrasenia)">{{usuario.mail}} - {{usuario.perfil}}</p>
+          </div>
         </div>
       </div>
       <div class="col-12 col-md-2"></div>
@@ -24,4 +24,5 @@
     </div>
   </div>
 </div>
+<ngx-spinner [type]="'ball-clip-rotate-multiple'"></ngx-spinner>
 

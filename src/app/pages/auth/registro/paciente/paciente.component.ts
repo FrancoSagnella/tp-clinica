@@ -7,6 +7,9 @@ import { Paciente } from 'src/app/clases/paciente';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-paciente',
   templateUrl: './paciente.component.html',
@@ -19,7 +22,10 @@ export class PacienteComponent implements OnInit {
   foto2:any;
   formGroup!:FormGroup;
 
-  constructor(private auth:AuthService, private fb:FormBuilder, private firestore:FirestoreService, private router:Router,private firestorage:AngularFireStorage, private afs:AngularFirestore) { }
+  // para el captcha
+  siteKey: string = '6LfXtPocAAAAAItVEVHGCmaeDIyjPpFMBm5fcl-Y';
+
+  constructor(private spinner:NgxSpinnerService, private auth:AuthService, private fb:FormBuilder, private firestore:FirestoreService, private router:Router,private firestorage:AngularFireStorage, private afs:AngularFirestore) { }
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
@@ -32,6 +38,7 @@ export class PacienteComponent implements OnInit {
       'foto1':[null, Validators.required],
       'foto2':[null, Validators.required],
       'obraSocial':['', Validators.required],
+      'recaptcha' : ['', Validators.required],
     });
   }
 
@@ -59,36 +66,47 @@ export class PacienteComponent implements OnInit {
     this.paciente.contrasenia = this.formGroup.controls.contrasenia.value;
     this.paciente.obraSocial = this.formGroup.controls.obraSocial.value;
     this.paciente.perfil = 'paciente';
+    this.spinner.show();
+
+    this.auth.register(this.paciente.mail, this.paciente.contrasenia).then(user => {
+      console.log(user.user);
 
 
-    // Agregar spinner
-    let pathRef = `fotos/`+this.paciente.nombre+this.paciente.DNI+`/1`;
-    const fileRef = this.firestorage.ref(pathRef);
-    const task = this.firestorage.upload(pathRef, this.foto1);
+      let pathRef = `fotos/`+this.paciente.nombre+this.paciente.DNI+`/1`;
+      const fileRef = this.firestorage.ref(pathRef);
+      const task = this.firestorage.upload(pathRef, this.foto1);
 
-    task.snapshotChanges().toPromise().then(() => {
-      fileRef.getDownloadURL().toPromise().then(response => {
+      task.snapshotChanges().toPromise().then(() => {
+        fileRef.getDownloadURL().toPromise().then(response => {
 
 
-        let pathRef2 = `fotos/`+this.paciente.nombre+this.paciente.DNI+`/2`;
-        const fileRef2 = this.firestorage.ref(pathRef2);
-        const task2 = this.firestorage.upload(pathRef2, this.foto2);
+          let pathRef2 = `fotos/`+this.paciente.nombre+this.paciente.DNI+`/2`;
+          const fileRef2 = this.firestorage.ref(pathRef2);
+          const task2 = this.firestorage.upload(pathRef2, this.foto2);
 
-        task.snapshotChanges().toPromise().then(() => {
-          fileRef2.getDownloadURL().toPromise().then(response2 => {
+          task2.snapshotChanges().toPromise().then(() => {
+            fileRef2.getDownloadURL().toPromise().then(response2 => {
 
-            this.paciente.foto = response;
-            this.paciente.foto2 = response2;
-            this.paciente.id = this.afs.createId();
+              this.paciente.foto = response;
+              this.paciente.foto2 = response2;
+              this.paciente.id = user.user.uid;
 
-            this.firestore.actualizar('usuarios', this.paciente.id, this.paciente).then(()=>{
-              // Agregar un SweetAlert
-              this.auth.register(this.paciente.mail, this.paciente.contrasenia);
-              this.router.navigate(['/bienvenida']);
+              this.firestore.actualizar('usuarios', this.paciente.id, this.paciente).then(()=>{
+                // Agregar un SweetAlert
+                this.spinner.hide();
+                Swal.fire({
+                  title:'¡Bien!',
+                  text:'¡Usuario registrado exitosamente!',
+                  icon:'success',
+                  cancelButtonText:'Cerrar',
+                });
+                this.router.navigate(['/bienvenida']);
+              });
             });
           });
         });
       });
     });
+
   }
 }

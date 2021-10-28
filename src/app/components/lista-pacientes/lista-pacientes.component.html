@@ -1,0 +1,27 @@
+<h2>Pacientes</h2>
+
+        <div>
+          <table class="table">
+              <tr>
+                  <td>
+                      Nombre
+                  </td>
+                  <td>
+                    Apellido
+                  </td>
+                  <td>
+                      DNI
+                  </td>
+              </tr>
+              <tr *ngFor="let item of listaPacientes">
+                  <td>
+                      {{item.nombre}}
+                  </td>
+                  <td>
+                      {{item.apellido}}
+                  </td>
+                  <td>
+                      {{item.dni}}
+                  </td>
+              </tr>
+          </table>

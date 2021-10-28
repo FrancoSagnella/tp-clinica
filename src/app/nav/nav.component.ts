@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
@@ -8,20 +8,39 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss']
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, OnChanges {
 
-  public user$: Observable<any> = this.authSvc.afAuth.user;
+  public user:any = this.authSvc.currentUser;
 
   constructor(private authSvc:AuthService, private router:Router) { }
 
   ngOnInit(): void {
     console.log('carga');
+    this.authSvc.afAuth.user.subscribe(()=>{
+      if(!this.user)
+      {
+        setTimeout(()=>{
+          this.user = this.authSvc.currentUser;
+          console.log('se cambia el usuario', this.user);
+        }, 1500);
+      }
+      else
+      {
+        this.user = null;
+      }
+    });
   }
 
-  async onLogout() {
+  ngOnChanges()
+  {
+    console.log('usuario', this.user);
+  }
+
+  onLogout() {
     try{
-      await this.authSvc.logout();
-      this.router.navigateByUrl('/login');
+      this.authSvc.logout().then(()=>{
+        this.router.navigateByUrl('/auth/login');
+      });
     }
     catch(e:any){
       console.log(e)

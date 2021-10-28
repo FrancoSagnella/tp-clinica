@@ -1,27 +1,38 @@
-# TpClinica
+# TpClinicaOnLine
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.10.
+Segundo TP Laboratorio 4 UTN FRA
 
-## Development server
+Probar aplicacion https://tp-clinica-sagnella.herokuapp.com/
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Inicio
 
-## Code scaffolding
+Al entrar a la aplicacion, vas a encontrate con el home, donde estaran disponibles todas las funcionalidades de la pagina, pero antes de comenzar a usarla se debe iniciar sesion, se dispone de un NavBar con los botones necesarios tanto para iniciar sesion como para registrarse
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Registros
 
-## Build
+Se cuentan con registros para usuarios de tipo Paciente y usuarios de tipo Especialista, para ambos casos, la cuenta debe ser verificada via mail para permitirle luego iniciar sesion, y en el caso de los especialistas, ademas tienen que ser aprobados por un administrador
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Panel de admin
 
-## Running unit tests
+Aca solo pueden acceder los usuarios administradores, se dispone de un listado de todos los usuarios, se da la opcion para poder activar las cuentas de los especialistas, y ademas se permite registrar todo tipo de usuarios, administradores incluidos
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Funcionalidades
 
-## Running end-to-end tests
+Una vez iniciada la sesion, al volver a home podemos acceder a sus funcionalidades
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Mis turnos
 
-## Further help
+En el caso de los pacientes, esta seccion mostrara todos los turnos que tiene asignado y permitira cancelarlos
+En el caso de los especialistas de igual forma, se listan los turnos y se pueden administrar
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Turnos
+
+Solo podra acceder el administrador, puede ver TODOS los turnos, pudiendo cancelarlos
+
+## Solicitar turno
+
+El paciente podra solicitar un nuevo turno, eligiendo especialista, fecha y horario (dependiendo la disponibilidad del mismo)
+
+## Mi perfil
+
+Al entrar, se mostraran todos los detalles del usuario, en caso de ser especielista, se mostraran sus dias y horarios disponibles, permitiendo que se cambien

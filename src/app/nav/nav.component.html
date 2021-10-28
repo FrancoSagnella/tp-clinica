@@ -10,19 +10,28 @@
     </ul>
     <div class="float-right">
 
-      <ul class="navbar-nav mx-auto" *ngIf="user$ | async as user; else login">
+      <ul class="navbar-nav mx-auto" *ngIf="user; else login">
         <li class="nav-item" *ngIf="user">
-          <a class="nav-link" (click)="onLogout()" [routerLink]="['auth/login']">LogOut</a>
+          <a class="nav-link" (click)="onLogout()" [routerLink]="['auth/login']">Cerrar Sesión</a>
+        </li>
+        <li class="nav-item" *ngIf="user.perfil == 'administrador'">
+          <a class="nav-link" [routerLink]="['admin/usuarios']">Panel de Administrador</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/']">{{ user?.email }}</a>
+          <a class="nav-link" [routerLink]="['/users/miPerfil']">{{ user.nombre }}<img src="{{ user.foto }}" width="25px" height="25px" style="margin-left: 15px;"></a>
         </li>
       </ul>
 
       <ng-template #login>
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['auth/login']">Login</a>
+            <a class="nav-link" [routerLink]="['auth/login']">Iniciar sesión</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['auth/registro/paciente']">Registrarse como Paciente</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['auth/registro/especialista']">Registrarse como Especialista</a>
           </li>
         </ul>
       </ng-template>
