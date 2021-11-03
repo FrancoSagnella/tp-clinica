@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <h1>Elegir Dia:</h1>
+    <ng-container *ngIf="diasLaborables.length > 0">
+      <ng-container *ngFor="let dias of diasAMostrar">
+        <div class="container-esp" *ngIf="diasLaborables.includes(dias | fecha : 'dia')" (click)="elegirDia(dias)">
+          <div class="card-inner" >
+            <div class="header">
+              <h3>{{dias | fecha : 'dia'}}</h3>
+              <h3>{{dias | fecha : 'fecha'}}</h3>
+              <h3>{{dias | fecha : 'mes'}}</h3>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    <h2 *ngIf="diasLaborables.length == 0">No hay dias para mostrar</h2>
+  </div>
+</div>

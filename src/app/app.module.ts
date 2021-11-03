@@ -25,43 +25,89 @@ import { ListaPacientesComponent } from './components/lista-pacientes/lista-paci
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TurnosComponent } from './pages/admin/turnos/turnos.component';
+import { RegisterComponent } from './pages/auth/registro/register/register.component';
+import { EspecialidadesComponent } from './components/especialidades/especialidades.component';
+import { EspecialistasElegirComponent } from './components/especialistas-elegir/especialistas-elegir.component';
+import { DiasElegirComponent } from './components/dias-elegir/dias-elegir.component';
+import { TurnosElegirComponent } from './components/turnos-elegir/turnos-elegir.component';
+import { FechaPipe } from './pipes/fecha.pipe';
+import { TurnoExistentePipe } from './pipes/turno-existente.pipe';
+import { PacienteElegirComponent } from './components/paciente-elegir/paciente-elegir.component';
+import { NombreUsuarioPipe } from './pipes/nombre-especialista.pipe';
+import { FechaProgramadaPipe } from './pipes/fecha-programada.pipe';
+import { CommonModule } from '@angular/common';
+import { ListaTurnosEspecialistaComponent } from './components/lista-turnos-especialista/lista-turnos-especialista.component';
+import { ListaTurnosPacienteComponent } from './components/lista-turnos-paciente/lista-turnos-paciente.component';
+import { VerReseniaComponent } from './components/ver-resenia/ver-resenia.component';
+import { ListaTurnosAdminComponent } from './components/lista-turnos-admin/lista-turnos-admin.component';
+import { MiPerfilComponent } from './pages/users/mi-perfil/mi-perfil.component';
 import { MisTurnosComponent } from './pages/users/mis-turnos/mis-turnos.component';
 import { SolicitarTurnoComponent } from './pages/users/solicitar-turno/solicitar-turno.component';
-import { MiPerfilComponent } from './pages/users/mi-perfil/mi-perfil.component';
-import { TurnosComponent } from './pages/admin/turnos/turnos.component';
+import { UsersModule } from './pages/users/users.module';
+import { AdminModule } from './pages/admin/admin.module';
+import { AuthModule } from './pages/auth/auth.module';
 // import { SpinnersAngularModule } from 'spinners-angular';
 @NgModule({
   declarations: [
     AppComponent,
     BienvenidaComponent,
-    LoginComponent,
-    UsuariosComponent,
     NavComponent,
-    PacienteComponent,
-    EspecialistaComponent,
-    AdministradorComponent,
-    ListaAdminsComponent,
-    ListaEspecialistasComponent,
-    ListaPacientesComponent,
-    MisTurnosComponent,
-    SolicitarTurnoComponent,
-    MiPerfilComponent,
-    TurnosComponent
+
+    // Componentes de Users
+    // MiPerfilComponent,
+    // MisTurnosComponent,
+    // SolicitarTurnoComponent,
+
+    // ListaTurnosEspecialistaComponent,
+    // ListaTurnosPacienteComponent,
+    // VerReseniaComponent,
+    // PacienteElegirComponent,
+    // EspecialidadesComponent,
+    // EspecialistasElegirComponent,
+    // DiasElegirComponent,
+    // TurnosElegirComponent,
+
+    // Componentes de Admin
+    // UsuariosComponent,
+    // TurnosComponent,
+
+    // ListaAdminsComponent,
+    // ListaEspecialistasComponent,
+    // ListaPacientesComponent,
+    // ListaTurnosAdminComponent,
+
+    // Componentes de Auth
+    // PacienteComponent,
+    // EspecialistaComponent,
+    // AdministradorComponent,
+    // RegisterComponent,
+    // LoginComponent,
+
+    // FechaPipe,
+    // TurnoExistentePipe,
+    // NombreUsuarioPipe,
+    // FechaProgramadaPipe,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     RouterModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    ReactiveFormsModule,
     AngularFireStorageModule,
-    // SpinnersAngularModule
+
     NgxSpinnerModule,
-    BrowserAnimationsModule,
     NgxCaptchaModule,
-    FormsModule
+
+    UsersModule,
+    AdminModule,
+    AuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

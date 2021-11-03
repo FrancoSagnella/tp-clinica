@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Turno } from 'src/app/clases/turno';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-mis-turnos',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MisTurnosComponent implements OnInit {
 
-  constructor() { }
+  mostrandoResenia!:boolean;
+  turnoPaResenia!:Turno;
+  constructor(public authSvc:AuthService) { }
 
   ngOnInit(): void {
   }
 
+  dejarDeMostrarResenia(e:any)
+  {
+    this.mostrandoResenia = e;
+  }
+
+  turnoElegido(e:any)
+  {
+    console.log('llega a turnoElegido');
+    this.turnoPaResenia = e;
+    this.mostrandoResenia = true;
+  }
 }

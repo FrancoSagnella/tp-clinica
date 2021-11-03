@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <h1>Elegir Horario:</h1>
+    <ng-container *ngFor="let horario of horasAMostrar">
+        <div class="container-esp" (click)="elegirHorario(horario)" *ngIf="turnosExistentes | turnoExistente:horario:(dia | fecha:'dia':1):(dia | fecha:'fecha':1):(dia | fecha:'mes':1)">
+          <div class="card-inner">
+            <div class="header">
+              <h3>{{dia | fecha : 'dia'}}</h3>
+              <h3>{{horario}}</h3>
+            </div>
+          </div>
+        </div>
+    </ng-container>
+  </div>
+</div>

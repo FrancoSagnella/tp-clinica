@@ -14,17 +14,24 @@ import { TurnosComponent } from './pages/admin/turnos/turnos.component';
 import { MisTurnosGuard } from './services/mis-turnos.guard';
 import { SolicitarTurnoGuard } from './services/solicitar-turno.guard';
 import { AuthGuard } from './services/auth.guard';
+import { RegisterComponent } from './pages/auth/registro/register/register.component';
 
 const routes: Routes = [{path:'bienvenida', component:BienvenidaComponent},
-{path:'auth/login', component:LoginComponent},
-{path:'auth/registro/paciente',component:PacienteComponent},
-{path:'auth/registro/especialista',component:EspecialistaComponent},
-{path:'auth/registro/administrador',component:AdministradorComponent, canActivate: [AdminGuard]},
-{path:'admin/usuarios', component:UsuariosComponent, canActivate: [AdminGuard]},
-{path:'admin/turnos', component:TurnosComponent, canActivate: [AdminGuard]},
-{path:'users/misTurnos',component:MisTurnosComponent, canActivate:[MisTurnosGuard]},
-{path:'users/solicitarTurno',component:SolicitarTurnoComponent, canActivate:[SolicitarTurnoGuard]},
-{path:'users/miPerfil',component:MiPerfilComponent, canActivate:[AuthGuard]},
+// {path:'auth/login', component:LoginComponent},
+// {path:'auth/registro', component:RegisterComponent},
+// {path:'auth/registro/paciente',component:PacienteComponent},
+// {path:'auth/registro/especialista',component:EspecialistaComponent},
+// {path:'auth/registro/administrador',component:AdministradorComponent, canActivate: [AdminGuard]},
+// {path:'admin/usuarios', component:UsuariosComponent, canActivate: [AdminGuard]},
+// {path:'admin/turnos', component:TurnosComponent, canActivate: [AdminGuard]},
+// {path:'users/misTurnos',component:MisTurnosComponent, canActivate:[MisTurnosGuard]},
+// {path:'users/solicitarTurno',component:SolicitarTurnoComponent, canActivate:[SolicitarTurnoGuard]},
+// {path:'users/miPerfil',component:MiPerfilComponent, canActivate:[AuthGuard]},
+
+{ path:'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)},
+{ path:'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule)},
+{ path:'users', loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule)},
+
 {path:'**', redirectTo:'bienvenida', pathMatch:'full'}];
 
 @NgModule({

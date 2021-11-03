@@ -7,7 +7,6 @@
 
       <div class="col-6">
         <form [formGroup]="formGroup" (ngSubmit)="enviar()">
-          <h4 class="mb-3">Datos del Especialista</h4>
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="firstName" class="form-label">Nombre</label>
@@ -60,6 +59,16 @@
                   formControlName="recaptcha">
                 </ngx-recaptcha2>
               </div>
+
+              <div class="col-md-6 mb-3">
+                <p>Especialidades:</p>
+                <ul>
+                  <li *ngFor="let especialidad of especialidadesParaAgregar">
+                    {{especialidad}}
+                  </li>
+                </ul>
+              </div>
+
               <hr class="my-4">
               <button type="submit" class="btn btn-primary btn-block" [disabled]="formGroup.invalid">
                 Aceptar
@@ -69,7 +78,7 @@
       </div>
       <div class="col-6">
         <div class="row">
-          <div class="col-6">
+          <!-- <div class="col-6">
             <input [(ngModel)]="especialidadNueva" type="text" placeholder="Agragar Especialidad" id="agregarEspecialidad"> <button class="btn btn-primary" (click)="agregarEspecialidad()">Agregar</button>
             <p *ngFor="let especialidad of especialidades">
               {{especialidad.nombre}} <button class="btn btn-primary" (click)="asignarEspecialidad(especialidad.nombre)">Asignar</button><button class="btn btn-danger" (click)="quitarEspecialidad(especialidad.nombre)">Quitar</button>
@@ -82,7 +91,34 @@
                 {{especialidad}}
               </li>
             </ul>
-          </div>
+          </div> -->
+          <table class="table table-light mydatatable">
+            <thead>
+                <th>
+                  Eliga sus especialidades
+                </th>
+                <th>
+                </th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <input class="form-control" [(ngModel)]="especialidadNueva" type="text" placeholder="Agregar Especialidad" id="agregarEspecialidad">
+                </td>
+                <td style="text-align: right;">
+                    <button class="btn btn-primary" (click)="agregarEspecialidad()">Agregar</button>
+                </td>
+              </tr>
+              <tr *ngFor="let especialidad of especialidades">
+                <td>
+                  {{especialidad.nombre}}
+                </td>
+                <td style="text-align: right;">
+                    <button class="btn btn-primary" (click)="asignarEspecialidad(especialidad.nombre)">Asignar</button><button style="margin-left: 2px;" class="btn btn-danger" (click)="quitarEspecialidad(especialidad.nombre)">Quitar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

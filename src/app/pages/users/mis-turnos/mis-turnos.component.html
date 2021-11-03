@@ -1,1 +1,28 @@
-<p>mis-turnos works!</p>
+<div>
+  <main role="main">
+
+    <div class="jumbotron fondo">
+      <div class="container">
+        <br><br>
+        <h1 class="display-3"> Mis Turnos:</h1>
+        <br><br>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row" style="text-align: center;">
+        <div class="col-9">
+          <app-lista-turnos-paciente (mostrarResenia)="turnoElegido($event)" *ngIf="authSvc.currentUser.perfil == 'paciente'"></app-lista-turnos-paciente>
+          <app-lista-turnos-especialista (mostrarResenia)="turnoElegido($event)" *ngIf="authSvc.currentUser.perfil == 'especialista'"></app-lista-turnos-especialista>
+        </div>
+        <div class="col-3">
+          <app-ver-resenia *ngIf="mostrandoResenia" [turno]="turnoPaResenia" (cerrar)="dejarDeMostrarResenia($event)"></app-ver-resenia>
+        </div>
+      </div>
+      <hr>
+    </div> <!-- /container -->
+  </main>
+
+
+</div>
+<ngx-spinner [type]="'ball-clip-rotate-multiple'"></ngx-spinner>

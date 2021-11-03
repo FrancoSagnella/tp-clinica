@@ -16,7 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class EspecialistaComponent implements OnInit {
 
-  especialista:Especialista = {id:'',nombre:'',apellido:'',edad:0,DNI:0,mail:'',contrasenia:'',especialidad:[],foto:'',perfil:'especialista',verificado:false, aprobado:false, horario:{empieza:'',termina:''},diasLaborables:[]};
+  especialista:Especialista = {id:'',nombre:'',apellido:'',edad:0,DNI:0,mail:'',contrasenia:'',especialidad:[],foto:'',perfil:'especialista',verificado:false, aprobado:false,diasLaborables:'', horario:{empieza:'', termina:''}};
   foto:any;
   formGroup!:FormGroup;
 
@@ -38,17 +38,7 @@ export class EspecialistaComponent implements OnInit {
       'mail':['', [Validators.required, Validators.email]],
       'contrasenia':[''],
       'foto':[null, Validators.required],
-      // 'especialidad':['', Validators.required],
-      // 'horario':['', Validators.required],
-      // 'recaptcha':['', Validators.required],
-      // 'lunes':[false],
-      // 'martes':[false],
-      // 'miercoles':[false],
-      // 'jueves':[false],
-      // 'viernes':[false],
-      // 'sabado':[false],
-
-      // 'dias':['', Validators.required],
+      'recaptcha':['', Validators.required],
     });
     this.firestore.obtenerTodos('especialidades').subscribe((usersSnapshot) => {
       this.especialidades = [];
@@ -79,46 +69,9 @@ export class EspecialistaComponent implements OnInit {
     this.especialista.contrasenia = this.formGroup.controls.contrasenia.value;
 
     this.especialista.especialidad = this.especialidadesParaAgregar;
-    // this.especialista.especialidad = this.formGroup.controls.especialidad.value;
+    this.especialista.diasLaborables = {lunes:false, martes:false, miercoles:false, jueves:false, viernes:false, sabado:false};
+    this.especialista.horario = {empieza:'', termina:''};
 
-    // let horario = this.formGroup.controls.horario.value;
-    // if(horario == 'todo'){
-    //   this.especialista.horario.empieza = '8:00';
-    //   this.especialista.horario.termina = '19:00';
-    // }
-    // else if(horario == 'maniana'){
-    //   this.especialista.horario.empieza = '8:00';
-    //   this.especialista.horario.termina = '12:30';
-    // }
-    // else{
-    //   this.especialista.horario.empieza = '12:30';
-    //   this.especialista.horario.termina = '19:00';
-    // }
-
-    // if(this.formGroup.controls.lunes.value)
-    // {
-    //   this.especialista.diasLaborables.push('lunes');
-    // }
-    // if(this.formGroup.controls.martes.value)
-    // {
-    //   this.especialista.diasLaborables.push('martes');
-    // }
-    // if(this.formGroup.controls.miercoles.value)
-    // {
-    //   this.especialista.diasLaborables.push('miercoles');
-    // }
-    // if(this.formGroup.controls.jueves.value)
-    // {
-    //   this.especialista.diasLaborables.push('jueves');
-    // }
-    // if(this.formGroup.controls.viernes.value)
-    // {
-    //   this.especialista.diasLaborables.push('viernes');
-    // }
-    // if(this.formGroup.controls.sabado.value)
-    // {
-    //   this.especialista.diasLaborables.push('sabado');
-    // }
 
     this.spinner.show();
 
@@ -154,7 +107,7 @@ export class EspecialistaComponent implements OnInit {
     console.log(this.especialidadNueva);
     if(this.especialidadNueva != '')
     {
-      let data = {nombre:this.especialidadNueva};
+      let data = {nombre:this.especialidadNueva, foto:'https://firebasestorage.googleapis.com/v0/b/tp2labo4.appspot.com/o/especialidades%2Fdefault.jpg?alt=media&token=ca6640ca-9ce3-464c-a857-265168d69ffb'};
       this.spinner.show();
       this.firestore.crear('especialidades', data).then(()=>{
         this.spinner.hide();

@@ -23,38 +23,17 @@ export class MiPerfilComponent implements OnInit {
   ngOnInit(): void {
     if(this.usuario.perfil == 'especialista')
     {
-      let lunes:any = false;
-      let martes:any = false;
-      let miercoles:any = false;
-      let jueves:any = false;
-      let viernes:any = false;
-      let sabado:any = false;
+      console.info('usuario', this.usuario);
+      let lunes:any = this.usuario.diasLaborables.lunes;
+      let martes:any = this.usuario.diasLaborables.martes;
+      let miercoles:any = this.usuario.diasLaborables.miercoles;
+      let jueves:any = this.usuario.diasLaborables.jueves;
+      let viernes:any = this.usuario.diasLaborables.viernes;
+      let sabado:any = this.usuario.diasLaborables.sabado;
 
-      this.usuario.diasLaborables.forEach((element: any) => {
-        switch(element)
-        {
-          case 'lunes':
-            lunes = true;
-            break;
-            case 'martes':
-            martes = true;
-              break;
-              case 'miercoles':
-              miercoles = true;
-                break;
-                case 'jueves':
-              jueves = true;
-            break;
-            case 'viernes':
-            viernes = true;
-            break;
-            case 'sabado':
-            sabado = true;
-            break;
-        }
-      });
       this.dias = {lunes:lunes, martes:martes, miercoles:miercoles, jueves:jueves, viernes:viernes, sabado:sabado};
       console.info('dias', this.dias);
+
 
       if(this.usuario.horario.empieza == '8:00' && this.usuario.horario.termina == '19:00')
       {
@@ -88,45 +67,25 @@ export class MiPerfilComponent implements OnInit {
   enviar()
   {
     this.spinner.show();
+
+    this.usuario.diasLaborables.lunes = this.formGroup.controls.lunes.value;
+    this.usuario.diasLaborables.martes = this.formGroup.controls.martes.value;
+    this.usuario.diasLaborables.miercoles = this.formGroup.controls.miercoles.value;
+    this.usuario.diasLaborables.jueves = this.formGroup.controls.jueves.value;
+    this.usuario.diasLaborables.viernes = this.formGroup.controls.viernes.value;
+    this.usuario.diasLaborables.sabado = this.formGroup.controls.sabado.value;
+
     let horario = this.formGroup.controls.horario.value;
+
     if(horario == 'todo'){
-      this.usuario.horario.empieza = '8:00';
-      this.usuario.horario.termina = '19:00';
+      // horarios = {hora:'8:00', ocupado:false}, {hora:'8:30', ocupado:false}
+      this.usuario.horario = {empieza:'8:00', termina:'19:00'};
     }
     else if(horario == 'maniana'){
-      this.usuario.horario.empieza = '8:00';
-      this.usuario.horario.termina = '12:30';
+      this.usuario.horario = {empieza:'8:00', termina:'13:30'};
     }
     else{
-      this.usuario.horario.empieza = '12:30';
-      this.usuario.horario.termina = '19:00';
-    }
-
-    this.usuario.diasLaborables = [];
-
-    if(this.formGroup.controls.lunes.value)
-    {
-      this.usuario.diasLaborables.push('lunes');
-    }
-    if(this.formGroup.controls.martes.value)
-    {
-      this.usuario.diasLaborables.push('martes');
-    }
-    if(this.formGroup.controls.miercoles.value)
-    {
-      this.usuario.diasLaborables.push('miercoles');
-    }
-    if(this.formGroup.controls.jueves.value)
-    {
-      this.usuario.diasLaborables.push('jueves');
-    }
-    if(this.formGroup.controls.viernes.value)
-    {
-      this.usuario.diasLaborables.push('viernes');
-    }
-    if(this.formGroup.controls.sabado.value)
-    {
-      this.usuario.diasLaborables.push('sabado');
+      this.usuario.horario = {empieza:'14:00', termina:'19:00'};
     }
 
     this.firestore.actualizar('usuarios', this.usuario.id, this.usuario).then(()=>{

@@ -1,23 +1,36 @@
 <div class="wrapper">
   <div class="container">
-    <div class="row">
+    <div class="row login-form">
       <div class="col-12 col-md-2"></div>
       <div class="col-12 col-md-4" >
+        <div class="form-signin" style="text-align: center;">
+          <h2 class="form-signin-heading">Iniciá Rápido!</h2>
+          <h5 class="form-signin-heading">Como Admin:</h5>
+          <button class="btn btn-primary" (click)="seleccionarUsuario('vsl16447@zwoho.com', '123123')">Ingresar como admin</button>
+          <br><br>
+          <h5 class="form-signin-heading">Como Especialista:</h5>
+          <button class="btn btn-warning" (click)="seleccionarUsuario('hub28069@boofx.com', '123123')">Especialista 1</button>
+          <button class="btn btn-secondary" style="margin-left: 2px;" (click)="seleccionarUsuario('mxn51470@cuoly.com', '123123')">Especialista 2</button>
+          <br><br>
+          <h5 class="form-signin-heading">Como Paciente:</h5>
+          <button class="btn btn-danger" (click)="seleccionarUsuario('pjz62339@boofx.com', '123123')">Paciente 1</button>
+          <button class="btn btn-info" style="margin-left: 2px;" (click)="seleccionarUsuario('drm72205@zwoho.com', '123123')">Paciente 2</button>
+          <button class="btn btn-success" style="margin-left: 2px;" (click)="seleccionarUsuario('fransagn@gmail.com', '123123')">Paciente 3</button>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
         <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
           <h2 class="form-signin-heading">Iniciá Sesión!</h2>
+          <br><br>
           <input type="text" class="form-control" name="username" placeholder="Ingresá tu email" required="" autofocus="" formControlName="email" />
-          <input type="password" class="form-control" name="password" placeholder="Ingresá tu contraseña" required="" formControlName="password"/>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
           <br>
+          <input type="password" class="form-control" name="password" placeholder="Ingresá tu contraseña" required="" formControlName="password"/>
+          <br><br>
+          <button class="btn btn-lg btn-dark btn-block" type="submit">Iniciar sesión</button>
+          <br><br>
+          <a [routerLink]="['/auth/registro']">No tenes cuenta? Registrate!</a>
         </form>
-      </div>
-      <div class="col-12 col-md-4">
-        <div class="form-signin">
-          <h2 class="form-signin-heading">Iniciá Rápido!</h2>
-          <div>
-            <p *ngFor="let usuario of users" (click)="seleccionarUsuario(usuario.mail, usuario.contrasenia)">{{usuario.mail}} - {{usuario.perfil}}</p>
-          </div>
-        </div>
       </div>
       <div class="col-12 col-md-2"></div>
 

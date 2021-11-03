@@ -9,7 +9,7 @@
                   <td>
                     Apellido
                   </td>
-                  <td>
+                  <td *ngIf="admin">
                       DNI
                   </td>
               </tr>
@@ -20,10 +20,10 @@
                   <td>
                       {{item.apellido}}
                   </td>
-                  <td>
+                  <td *ngIf="admin">
                       {{item.DNI}}
                   </td>
-                  <td>
+                  <td *ngIf="admin">
                     <div class="row">
                       <button class="btn btn-primary" *ngIf="!item.aprobado" (click)="manejarActivacion('activar', item)">Activar cuenta</button>
                       <button class="btn btn-primary" *ngIf="item.aprobado" (click)="manejarActivacion('desactivar', item)">Desactivar cuenta</button>

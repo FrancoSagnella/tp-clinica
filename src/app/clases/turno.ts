@@ -2,11 +2,19 @@ export interface Turno {
   id:string,
   idPaciente:string,
   idEspecialista:string,
-  fecha:string;
+  especialidad:string,
+  fecha:number,
+  // dia:string,
+  hora:string,
   estado:string, // pendiente, finalizado, cancelado, aceptado, rechazado
   duracion:number, // en minutos
-  fechaCreacion:string,
-  reseña:string, // comentario que deja el paciente (al finalizar el turno)
+  fechaCreacion:number,
+  resenia:boolean, // comentario que deja el paciente (al finalizar el turno)
+  comentarioPaciente:string,
+  comentarioEspecialista:string,
+  comentarioAdmin:string,
+  diagnostico:string,
+  tieneCalificacion:boolean,
   calificacion:number, // calificacion que deja el paciente (al finalizar el turno)
   encuestaRealizada:boolean,
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Especialista } from 'src/app/clases/especialista';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -10,6 +10,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class ListaEspecialistasComponent implements OnInit {
 
   listaEspecialistas:Especialista[] = [];
+  @Input() admin:boolean = true;
 
   constructor(private firestore:FirestoreService) { }
 
