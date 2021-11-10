@@ -1,3 +1,5 @@
+<h4>Filtrar Turnos:</h4>
+<input type="text" [(ngModel)]="stringFiltro" ><button class="btn btn-primary" (click)="filtrar()">Filtrar</button><button class="btn btn-info" (click)="limpiarFiltro()">Limpiar</button>
 <table class="table table-light mydatatable">
   <thead>
     <th>
@@ -20,7 +22,7 @@
     </th>
   </thead>
   <tbody>
-    <tr *ngFor="let turno of turnosExistentes">
+    <tr *ngFor="let turno of turnosFiltrados">
       <td>
         {{turno.idEspecialista | nombreUsuario:listadoEspecialistas}}
       </td>
@@ -40,7 +42,6 @@
         <div class="row">
           <button *ngIf="turno.estado != 'finalizado' && turno.estado != 'cancelado'" class="btn btn-danger" (click)="cancelarTurno(turno)">Cancelar</button>
           <button *ngIf="turno.resenia" class="btn btn-info" (click)="verResenia(turno)">Reseña</button>
-          <button *ngIf="turno.estado == 'finalizado' && turno.resenia" (click)="completarEncuesta(turno)" class="btn btn-secondary">Encuesta</button>
           <button *ngIf="turno.estado == 'finalizado' && turno.tieneCalificacion" (click)="calificarTurno(turno)" class="btn btn-primary">Calificar</button>
         </div>
       </td>

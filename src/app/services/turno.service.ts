@@ -62,7 +62,7 @@ export class TurnoService {
   {
     return this.referenciaColeccion.snapshotChanges().pipe(
       map(actions => actions.map(a => a.payload.doc.data() as Turno))
-    );
+    )
   }
 
   traerTodosByEspecialista(idEspecialista:string)

@@ -16,7 +16,7 @@ export class TurnoExistentePipe implements PipeTransform {
     {
       value.forEach((element:Turno) => {
         let fecha = new Date(element.fecha);
-        if(element.hora == args[0] && fecha.getDay() == args[1] && fecha.getDate() == args[2] && fecha.getMonth()+1 == args[3])
+        if(element.hora == args[0] && fecha.getDay() == args[1] && fecha.getDate() == args[2] && fecha.getMonth()+1 == args[3] && (element.estado == 'pendiente' || element.estado == 'aceptado'))
         {
           ret = false;
           throw BreakExcepion;

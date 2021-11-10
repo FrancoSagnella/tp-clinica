@@ -23,6 +23,7 @@ import { EspecialistasElegirComponent } from 'src/app/components/especialistas-e
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { HistoriaClinicaComponent } from 'src/app/components/historia-clinica/historia-clinica.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     EspecialistasElegirComponent,
     DiasElegirComponent,
     TurnosElegirComponent,
+    HistoriaClinicaComponent,
 
     // FechaPipe,
     // TurnoExistentePipe,

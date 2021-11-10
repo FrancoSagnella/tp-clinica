@@ -10,19 +10,35 @@
 
   <div class="container">
     <div class="row">
-        <div class="col-3" style="text-align: center;">
+      <div class="col-3" style="text-align: center;" *ngIf="usuarioActual == null">
+        <h2 style="text-align: center;">Inicie Sesión</h2>
+        <button class="btn btn-primary" (click)="iniciarSesion()">Iniciar Sesión</button>
+      </div>
+      <div class="col-3" style="text-align: center;" *ngIf="usuarioActual == null">
+        <h2 style="text-align: center;">Registrese</h2>
+        <button class="btn btn-primary" (click)="registrarse()">Registrarse</button>
+      </div>
+        <div class="col-3" style="text-align: center;" *ngIf="usuarioActual.perfil != 'administrador'">
           <h2 style="text-align: center;">Mis Turnos</h2>
           <button class="btn btn-primary" (click)="misTurnos()">Ver Turnos</button>
         </div>
-        <div class="col-3" style="text-align: center;">
+        <div class="col-3" style="text-align: center;" *ngIf="usuarioActual.perfil == 'administrador'">
           <h2 style="text-align: center;">Turnos</h2>
           <button class="btn btn-primary" (click)="turnos()">Ver Turnos</button>
         </div>
-        <div class="col-3" style="text-align: center;">
+        <div class="col-3" style="text-align: center;" *ngIf="usuarioActual.perfil != 'especialista'">
           <h2 style="text-align: center;" >Solicitar Turno</h2>
           <button class="btn btn-primary" (click)="solicitarTurno()">Pedir Turno</button>
         </div>
-        <div class="col-3" style="text-align: center;">
+        <div class="col-3" style="text-align: center;" *ngIf="usuarioActual.perfil == 'especialista'">
+          <h2 style="text-align: center;" >Pacientes</h2>
+          <button class="btn btn-primary" (click)="pacientes()">Ver Pacientes</button>
+        </div>
+        <div class="col-3" style="text-align: center;" *ngIf="usuarioActual.perfil == 'administrador'">
+          <h2 style="text-align: center;" >Usuarios</h2>
+          <button class="btn btn-primary" (click)="usuarios()">Ver usuarios</button>
+        </div>
+        <div class="col-3" style="text-align: center;" *ngIf="usuarioActual">
           <h2 style="text-align: center;">Mi Perfil</h2>
           <button class="btn btn-primary" (click)="miPerfil()">Ver mi Perfil</button>
         </div>

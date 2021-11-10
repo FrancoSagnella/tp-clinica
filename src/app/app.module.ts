@@ -47,12 +47,19 @@ import { SolicitarTurnoComponent } from './pages/users/solicitar-turno/solicitar
 import { UsersModule } from './pages/users/users.module';
 import { AdminModule } from './pages/admin/admin.module';
 import { AuthModule } from './pages/auth/auth.module';
-// import { SpinnersAngularModule } from 'spinners-angular';
+import { HistoriaClinicaComponent } from './components/historia-clinica/historia-clinica.component';
+import { PacientesComponent } from './pages/pacientes/pacientes.component';
+import { PacienteHistoriaComponent } from './pages/paciente-historia/paciente-historia.component';
+import { PipesModule } from './pipes/pipes.module';
 @NgModule({
   declarations: [
     AppComponent,
     BienvenidaComponent,
     NavComponent,
+    PacientesComponent,
+    PacienteHistoriaComponent,
+    // HistoriaClinicaComponent,
+    // HistoriaClinicaAdministradorComponent,
 
     // Componentes de Users
     // MiPerfilComponent,
@@ -108,6 +115,8 @@ import { AuthModule } from './pages/auth/auth.module';
     UsersModule,
     AdminModule,
     AuthModule,
+    PipesModule
+
   ],
   providers: [],
   bootstrap: [AppComponent],

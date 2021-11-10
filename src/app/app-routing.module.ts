@@ -15,8 +15,10 @@ import { MisTurnosGuard } from './services/mis-turnos.guard';
 import { SolicitarTurnoGuard } from './services/solicitar-turno.guard';
 import { AuthGuard } from './services/auth.guard';
 import { RegisterComponent } from './pages/auth/registro/register/register.component';
+import { PacientesComponent } from './pages/pacientes/pacientes.component';
+import { PacienteHistoriaComponent } from './pages/paciente-historia/paciente-historia.component';
 
-const routes: Routes = [{path:'bienvenida', component:BienvenidaComponent},
+const routes: Routes = [{path:'bienvenida', component:BienvenidaComponent, data: { animation: 'home'}},
 // {path:'auth/login', component:LoginComponent},
 // {path:'auth/registro', component:RegisterComponent},
 // {path:'auth/registro/paciente',component:PacienteComponent},
@@ -29,8 +31,10 @@ const routes: Routes = [{path:'bienvenida', component:BienvenidaComponent},
 // {path:'users/miPerfil',component:MiPerfilComponent, canActivate:[AuthGuard]},
 
 { path:'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)},
-{ path:'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule)},
-{ path:'users', loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule)},
+{ path:'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule), data: { animation: 'admin'}},
+{ path:'users', loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule), data: { animation: 'user'}},
+{path:'pacientes', component:PacientesComponent, pathMatch:'full'},
+{path:'paciente/historia', component:PacienteHistoriaComponent, pathMatch:'full'},
 
 {path:'**', redirectTo:'bienvenida', pathMatch:'full'}];
 

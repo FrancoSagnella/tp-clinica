@@ -14,9 +14,12 @@ import Swal from 'sweetalert2';
 export class ListaTurnosAdminComponent implements OnInit {
 
   turnosExistentes:any[] = [];
+  turnosFiltrados:Turno[] = [];
 
   listadoPacientes:any[] = [];
   listadoEspecialistas:any[] = [];
+
+  stringFiltro:string = '';
   constructor(private turno:TurnoService, private authSvc:AuthService, private users:UsersService, private firestore:FirestoreService) { }
 
   ngOnInit(): void {
@@ -26,6 +29,7 @@ export class ListaTurnosAdminComponent implements OnInit {
     // Obtengo todos los turnos del especialista seleccionado
     this.turno.traerTodos().subscribe(turnos => {
       this.turnosExistentes = turnos;
+      this.turnosFiltrados = this.turnosExistentes.slice();
       // console.info('turnos', this.turnosExistentes);
     });
   }
@@ -50,5 +54,81 @@ export class ListaTurnosAdminComponent implements OnInit {
         this.firestore.actualizar('turnos', turno.id, turno);
       }
     })
+  }
+
+  filtrar()
+  {
+    if(this.stringFiltro != '')
+    {
+      console.log('entra aca');
+      let indiceEliminar:number[]=[];
+      this.turnosFiltrados.forEach((element, index) => {
+        // Filtro por pacientes
+        let paciente=false;
+        for(let i = 0;i < this.listadoPacientes.length; i++)
+        {
+          if(element.idPaciente == this.listadoPacientes[i].id && (this.listadoPacientes[i].nombre.toLowerCase().includes(this.stringFiltro.toLowerCase()) || this.listadoPacientes[i].apellido.toLowerCase().includes(this.stringFiltro.toLowerCase())))
+          {
+            paciente = true;
+            break;
+          }
+        }
+
+        // Filtro por especialistas
+        let especialista=false;
+        for(let i = 0;i < this.listadoEspecialistas.length; i++)
+        {
+          if(element.idEspecialista == this.listadoEspecialistas[i].id && (this.listadoEspecialistas[i].nombre.toLowerCase().includes(this.stringFiltro.toLowerCase()) || this.listadoEspecialistas[i].apellido.toLowerCase().includes(this.stringFiltro.toLowerCase())))
+          {
+            especialista = true;
+            break;
+          }
+        }
+
+        // Filtro por especialidad
+        let especialidad=false;
+        if(element.especialidad.toLowerCase().includes(this.stringFiltro.toLowerCase()))
+        {
+          especialidad=true;
+        }
+
+        // Filtro por fecha
+        let fecha = new Date(element.fecha);
+        let fechaProgramada = fecha.getDate()+'/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear();
+        let filtroFecha=false;
+        if(fechaProgramada.toLowerCase().includes(this.stringFiltro.toLowerCase()))
+        {
+          filtroFecha=true;
+        }
+
+        // Filtro por horario
+        let filtroHorario=false;
+        if(element.hora.toLowerCase().includes(this.stringFiltro.toLowerCase())){
+          filtroHorario=true;
+        }
+
+        // Filtro por estado
+        let filtroEstado=false;
+        if(element.estado.toLowerCase().includes(this.stringFiltro.toLowerCase())){
+          filtroEstado=true;
+        }
+
+        if(!paciente && !especialista && !especialidad && !filtroFecha && !filtroHorario && !filtroEstado)
+        {
+          console.log('me esta funcando el filtro', element);
+          indiceEliminar.push(index);
+        }
+      });
+
+      let cont=0;
+      indiceEliminar.forEach(element => {
+        this.turnosFiltrados.splice((element-cont),1);
+        cont++;
+      });
+    }
+  }
+  limpiarFiltro()
+  {
+    this.turnosFiltrados = this.turnosExistentes.slice();
   }
 }

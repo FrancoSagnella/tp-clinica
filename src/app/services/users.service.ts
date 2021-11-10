@@ -13,21 +13,25 @@ export class UsersService {
   constructor(private firestore:FirestoreService) {
 
     this.firestore.obtenerTodos('usuarios').subscribe((usuariosSnapshot) => {
+
+      this.listadoPacientes = [];
+      this.listadoAdministradores = [];
+      this.listadoEspecialistas = [];
+
       usuariosSnapshot.forEach((usuarioData: any) => {
         let data = usuarioData.payload.doc.data();
         if(data.perfil == 'especialista')
         {
           this.listadoEspecialistas.push({
+            id:data.id,
             DNI:data.DNI,
+            nombre:data.nombre,
             apellido:data.apellido,
             aprobado:data.aprobado,
-            contrasenia:data.contrasenia,
             edad:data.edad,
             especialidad:data.especialidad,
             foto:data.foto,
-            id:data.id,
             mail:data.mail,
-            nombre:data.nombre,
             perfil:data.perfil,
             verificado:data.verificado,
             horario:data.horario,
@@ -37,23 +41,28 @@ export class UsersService {
         {
           this.listadoPacientes.push({
             id:data.id,
+            DNI:data.DNI,
             nombre:data.nombre,
             apellido:data.apellido,
             edad:data.edad,
-            dni:data.DNI,
-            perfil:data.perfil});
+            perfil:data.perfil,
+            foto:data.foto,
+            foto2:data.foto2,
+            obraSocial:data.obraSocial,
+            mail:data.mail});
         }
         if(data.perfil == 'administrador')
         {
           this.listadoAdministradores.push({
             id:data.id,
+            DNI:data.DNI,
             nombre:data.nombre,
             apellido:data.apellido,
             edad:data.edad,
-            dni:data.DNI,
             perfil:data.perfil});
         }
       });
     });
    }
+
 }

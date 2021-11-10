@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class BienvenidaComponent implements OnInit {
 
+  usuarioActual = this.authSvc.currentUser;
   constructor(private router:Router, private authSvc:AuthService) { }
 
   ngOnInit(): void {
@@ -32,5 +33,24 @@ export class BienvenidaComponent implements OnInit {
   miPerfil()
   {
     this.router.navigateByUrl('/users/miPerfil');
+  }
+
+  pacientes()
+  {
+    this.router.navigateByUrl('/pacientes');
+  }
+
+  usuarios()
+  {
+    this.router.navigateByUrl('/admin/usuarios');
+  }
+
+  iniciarSesion()
+  {
+    this.router.navigateByUrl('/auth/login');
+  }
+  registrarse()
+  {
+    this.router.navigateByUrl('/auth/registro');
   }
 }

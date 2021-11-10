@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class ListaPacientesComponent implements OnInit {
 
   listaPacientes:any[] = [];
 
-  constructor(private firestore:FirestoreService) { }
+  constructor(private firestore:FirestoreService, private router:Router) { }
 
   ngOnInit(): void {
     this.firestore.obtenerTodos('usuarios').subscribe((usuariosSnapshot) => {
@@ -31,4 +32,8 @@ export class ListaPacientesComponent implements OnInit {
     });
   }
 
+  verHistoriasClinicas()
+  {
+    this.router.navigateByUrl('/pacientes');
+  }
 }

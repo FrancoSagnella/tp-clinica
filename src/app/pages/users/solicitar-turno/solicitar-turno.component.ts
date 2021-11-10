@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Especialista } from 'src/app/clases/especialista';
+import { Paciente } from 'src/app/clases/paciente';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { TurnoService } from 'src/app/services/turno.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-solicitar-turno',
@@ -22,13 +24,15 @@ export class SolicitarTurnoComponent implements OnInit {
   horarioSeleccionado:any;
 
   listadoEspecialistas:Especialista[] = [];
+  listadoPacientes:Paciente[] = [];
   listadoEspecialidades:any[] = [];
-  listadoDias:any[] = [];
-  lsitadoHorarios:string[] = ['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14;00','14;30','15:00','15:30','16:00','16;30','17:00','17:30','18:00','18:30','19:00'];
 
-  constructor(private turno:TurnoService ,private router:Router, public authSvc:AuthService, private fb:FormBuilder, private firestore:FirestoreService) { }
+  constructor(private turno:TurnoService ,private router:Router, public authSvc:AuthService, private firestore:FirestoreService, private usuarios:UsersService) { }
 
   ngOnInit(): void {
+    this.listadoEspecialistas = this.usuarios.listadoEspecialistas;
+    this.listadoPacientes = this.usuarios.listadoPacientes;
+
     this.firestore.obtenerTodos('especialidades').subscribe((usuariosSnapshot) => {
       this.listadoEspecialidades = [];
       usuariosSnapshot.forEach((usuarioData: any) => {
@@ -55,7 +59,26 @@ export class SolicitarTurnoComponent implements OnInit {
   elegirEspecialidad(especialidad:any)
   {
     this.especialidadSeleccionada = especialidad;
-    this.estadoAlta++;
+
+    // Me fijo si tenia uno o mas especialistas de esa especialidad
+    let auxArray:Especialista[] = [];
+    this.listadoEspecialistas.forEach(element => {
+      if(element.especialidad.includes(especialidad) )
+      {
+        auxArray.push(element);
+      }
+    });
+
+    if(auxArray.length == 1)
+    {
+      this.especialistaSeleccionado = auxArray.pop();
+      this.estadoAlta = this.estadoAlta+2;
+    }
+    else
+    {
+      this.estadoAlta++;
+    }
+
   }
 
   elegirEspecialista(especialista:string)

@@ -20,8 +20,11 @@
   <div class="container">
     <!-- Example row of columns -->
     <div class="row" *ngIf="usuario.perfil != 'especialista'">
-      <div class="col-12">
+      <div class="col-6">
         <h1>Datos de usuario:</h1>
+      </div>
+      <div class="col-6" *ngIf="usuario.perfil == 'paciente'">
+        <h1>Historia Clinica:</h1>
       </div>
     </div>
 
@@ -37,12 +40,15 @@
     <hr>
 
     <div class="row" *ngIf="usuario.perfil != 'especialista'">
-        <div class="col-12">
+        <div class="col-6">
           <p>Nombre completo: {{usuario.nombre}} {{usuario.apellido}}</p>
           <p>Edad: {{usuario.edad}}</p>
           <p>DNI: {{usuario.DNI}}</p>
           <p>Correo: {{usuario.mail}}</p>
           <p *ngIf="usuario.perfil == 'paciente'">Obra Social: {{usuario.obraSocial}}</p>
+        </div>
+        <div class="col-6" *ngIf="usuario.perfil == 'paciente'">
+          <app-historia-clinica></app-historia-clinica>
         </div>
       </div>
 

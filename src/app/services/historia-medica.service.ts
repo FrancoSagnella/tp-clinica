@@ -8,13 +8,14 @@ import { HistoriaClinica } from '../clases/historiaClinica';
 import { Turno } from '../clases/turno';
 import { AuthService } from './auth.service';
 import { FirestoreService } from './firestore.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoriaMedicaService {
 
-  referenciaColeccion:any;
+  referenciaColeccion:AngularFirestoreCollection;
   constructor(private router:Router, private spinner:NgxSpinnerService, private firestore:FirestoreService, private authSvc:AuthService, private afs:AngularFirestore) {
     this.referenciaColeccion = this.afs.collection('historiasMedicas', ref => ref.orderBy('fecha', 'desc'));
    }
@@ -24,6 +25,7 @@ export class HistoriaMedicaService {
     let historiaMedica:HistoriaClinica = {id:this.afs.createId(),
       idPaciente:turno.idPaciente,
       idEspecialista:turno.idEspecialista,
+      idTurno:turno.id,
       altura:altura,
       fecha:new Date().getTime(),
       peso:peso,
@@ -37,12 +39,34 @@ export class HistoriaMedicaService {
       // terminar spinner
       this.spinner.hide();
       Swal.fire({
-        title:'Historia Clinica Creado',
+        title:'Historia Clinica Creada',
         icon:'success',
         text:'Historia Clinica creada exitosamente',
         cancelButtonText:'Cerrar',
       });
-    this.router.navigateByUrl('/user/misTurnos');
     });
+  }
+
+  traerTodos()
+  {
+    return this.referenciaColeccion.snapshotChanges().pipe(
+      map(actions => actions.map(a => a.payload.doc.data() as HistoriaClinica))
+    );
+  }
+
+  traerTodosByEspecialista(idEspecialista:string)
+  {
+    return this.traerTodos().pipe(
+      map(turnos => turnos.filter(
+        turno => turno.idEspecialista == idEspecialista))
+    );
+  }
+
+  traerTodosByPaciente(idPaciente:string)
+  {
+    return this.traerTodos().pipe(
+      map(turnos => turnos.filter(
+        turno => turno.idPaciente == idPaciente))
+    );
   }
 }

@@ -2,6 +2,7 @@ export interface HistoriaClinica {
   id:string,
   idPaciente:string,
   idEspecialista:string,
+  idTurno:string,
   altura:number,
   peso:number,
   temepratura:number,

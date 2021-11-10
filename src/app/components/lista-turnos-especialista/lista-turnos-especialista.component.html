@@ -1,3 +1,5 @@
+<h4>Filtrar Turnos:</h4>
+<input type="text" [(ngModel)]="stringFiltro" ><button class="btn btn-primary" (click)="filtrar()">Filtrar</button><button class="btn btn-info" (click)="limpiarFiltro()">Limpiar</button>
 <table class="table table-light mydatatable">
   <thead>
     <th>
@@ -20,7 +22,7 @@
     </th>
   </thead>
   <tbody>
-    <tr *ngFor="let turno of turnosExistentes">
+    <tr *ngFor="let turno of turnosFiltrados">
       <td>
         {{turno.idPaciente | nombreUsuario:listadoPacientes}}
       </td>

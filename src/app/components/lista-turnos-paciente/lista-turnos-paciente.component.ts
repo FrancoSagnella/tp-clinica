@@ -13,10 +13,13 @@ import Swal from 'sweetalert2';
 })
 export class ListaTurnosPacienteComponent implements OnInit {
 
-  turnosExistentes:any[] = [];
+  turnosExistentes:Turno[] = [];
+  turnosFiltrados:Turno[] = [];
 
   listadoEspecialistas:any[] = [];
   @Output() mostrarResenia:EventEmitter<any> = new EventEmitter<any>();
+
+  stringFiltro = '';
 
   constructor(private turno:TurnoService, private authSvc:AuthService, private users:UsersService, private firestore:FirestoreService) { }
 
@@ -25,6 +28,7 @@ export class ListaTurnosPacienteComponent implements OnInit {
     // Obtengo todos los turnos del especialista seleccionado
     this.turno.traerTodosByPaciente(this.authSvc.currentUser.id).subscribe(turnos => {
       this.turnosExistentes = turnos;
+      this.turnosFiltrados = this.turnosExistentes.slice();
       // console.info('turnos', this.turnosExistentes);
     });
   }
@@ -57,11 +61,6 @@ export class ListaTurnosPacienteComponent implements OnInit {
     this.mostrarResenia.emit(turno);
   }
 
-  completarEncuesta(turno:Turno)
-  {
-
-  }
-
   calificarTurno(turno:Turno)
   {
     Swal.fire({
@@ -81,5 +80,68 @@ export class ListaTurnosPacienteComponent implements OnInit {
         this.firestore.actualizar('turnos', turno.id, turno);
       }
     })
+  }
+
+  filtrar()
+  {
+    if(this.stringFiltro != '')
+    {
+      let indiceEliminar:number[]=[];
+      this.turnosFiltrados.forEach((element, index) => {
+        // Filtro por especialistas
+        let especialista=false;
+        for(let i = 0;i < this.listadoEspecialistas.length; i++)
+        {
+          if(element.idEspecialista == this.listadoEspecialistas[i].id && (this.listadoEspecialistas[i].nombre.toLowerCase().includes(this.stringFiltro.toLowerCase()) || this.listadoEspecialistas[i].apellido.toLowerCase().includes(this.stringFiltro.toLowerCase())))
+          {
+            especialista = true;
+            break;
+          }
+        }
+
+        // Filtro por especialidad
+        let especialidad=false;
+        if(element.especialidad.toLowerCase().includes(this.stringFiltro.toLowerCase()))
+        {
+          especialidad=true;
+        }
+
+        // Filtro por fecha
+        let fecha = new Date(element.fecha);
+        let fechaProgramada = fecha.getDate()+'/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear();
+        let filtroFecha=false;
+        if(fechaProgramada.toLowerCase().includes(this.stringFiltro.toLowerCase()))
+        {
+          filtroFecha=true;
+        }
+
+        // Filtro por horario
+        let filtroHorario=false;
+        if(element.hora.toLowerCase().includes(this.stringFiltro.toLowerCase())){
+          filtroHorario=true;
+        }
+
+        // Filtro por estado
+        let filtroEstado=false;
+        if(element.estado.toLowerCase().includes(this.stringFiltro.toLowerCase())){
+          filtroEstado=true;
+        }
+
+        if(!especialista && !especialidad && !filtroFecha && !filtroHorario && !filtroEstado)
+        {
+          indiceEliminar.push(index);
+        }
+      });
+
+      let cont=0;
+      indiceEliminar.forEach(element => {
+        this.turnosFiltrados.splice((element-cont),1);
+        cont++;
+      });
+    }
+  }
+  limpiarFiltro()
+  {
+    this.turnosFiltrados = this.turnosExistentes.slice();
   }
 }

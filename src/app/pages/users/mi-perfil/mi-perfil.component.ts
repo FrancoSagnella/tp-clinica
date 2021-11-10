@@ -18,6 +18,7 @@ export class MiPerfilComponent implements OnInit {
 
   dias:any;
   horario:any;
+
   constructor(private authSvc:AuthService, private fb:FormBuilder, private firestore:FirestoreService, private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {

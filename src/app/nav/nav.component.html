@@ -14,9 +14,6 @@
         <li class="nav-item" *ngIf="user">
           <a class="nav-link" (click)="onLogout()" [routerLink]="['auth/login']">Cerrar Sesión</a>
         </li>
-        <li class="nav-item" *ngIf="user.perfil == 'administrador'">
-          <a class="nav-link" [routerLink]="['admin/usuarios']">Panel de Administrador</a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/users/miPerfil']">{{ user.nombre }}<img src="{{ user.foto }}" width="25px" height="25px" style="margin-left: 15px;"></a>
         </li>
