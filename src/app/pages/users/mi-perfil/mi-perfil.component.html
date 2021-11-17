@@ -1,7 +1,7 @@
 <main role="main">
 
   <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class="jumbotron">
+  <div class="jumbotron fondo">
     <div class="container">
         <div class="row">
             <div class="col-6" style="text-align: center;">
@@ -9,8 +9,8 @@
                 <h1>{{usuario.apellido}}, {{usuario.nombre}}</h1>
             </div>
             <div class="col-6" style="text-align: center;">
-                <img class="foto" [src]="usuario.foto" width="200px" height="200px">
-                <img style="margin-left: 50px;" *ngIf="usuario.perfil == 'paciente'" class="foto" [src]="usuario.foto2" width="200px" height="200px">
+                <img style="border-bottom-left-radius: 50%; border-bottom-right-radius: 50%; border-top-right-radius: 50%; border-top-left-radius: 50%;" class="foto" [src]="usuario.foto" width="200px" height="200px">
+                <img style="margin-left: 50px; border-bottom-left-radius: 50%; border-bottom-right-radius: 50%; border-top-right-radius: 50%; border-top-left-radius: 50%;" *ngIf="usuario.perfil == 'paciente'" class="foto" [src]="usuario.foto2" width="200px" height="200px">
 
             </div>
         </div>
