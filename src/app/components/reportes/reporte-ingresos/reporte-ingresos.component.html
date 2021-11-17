@@ -1,0 +1,28 @@
+<button class="btn btn-primary" (click)="volver()">Volver</button>
+<button class="btn btn-success">Descargar</button>
+<table class="table table-light mydatatable">
+  <thead>
+    <th>
+      Usuario
+    </th>
+    <th>
+      Fecha
+    </th>
+    <th>
+      Hora
+    </th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ingreso of logIngresos">
+      <td>
+        {{ingreso.idUsuario | nombreUsuario:listadoUsuarios}}
+      </td>
+      <td>
+        {{ingreso.fecha}}
+      </td>
+      <td>
+        {{ingreso.hora}}
+      </td>
+    </tr>
+  </tbody>
+</table>

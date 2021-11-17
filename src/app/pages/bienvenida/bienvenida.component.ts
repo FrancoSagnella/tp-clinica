@@ -53,4 +53,8 @@ export class BienvenidaComponent implements OnInit {
   {
     this.router.navigateByUrl('/auth/registro');
   }
+  reportes()
+  {
+    this.router.navigateByUrl('/admin/reportes')
+  }
 }

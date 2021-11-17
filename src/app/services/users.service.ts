@@ -9,6 +9,7 @@ export class UsersService {
   public listadoEspecialistas:any[] = [];
   public listadoPacientes:any[] = [];
   public listadoAdministradores:any[] = [];
+  public listadoUsuarios:any[]=[];
 
   constructor(private firestore:FirestoreService) {
 
@@ -17,6 +18,7 @@ export class UsersService {
       this.listadoPacientes = [];
       this.listadoAdministradores = [];
       this.listadoEspecialistas = [];
+      this.listadoUsuarios = [];
 
       usuariosSnapshot.forEach((usuarioData: any) => {
         let data = usuarioData.payload.doc.data();
@@ -61,6 +63,12 @@ export class UsersService {
             edad:data.edad,
             perfil:data.perfil});
         }
+
+        this.listadoUsuarios.push({
+          nombre:data.nombre,
+          id:data.id,
+          apellido:data.apellido,
+        })
       });
     });
    }

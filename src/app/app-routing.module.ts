@@ -30,11 +30,10 @@ const routes: Routes = [{path:'bienvenida', component:BienvenidaComponent, data:
 // {path:'users/solicitarTurno',component:SolicitarTurnoComponent, canActivate:[SolicitarTurnoGuard]},
 // {path:'users/miPerfil',component:MiPerfilComponent, canActivate:[AuthGuard]},
 
-{ path:'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)},
+{ path:'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule), data: { animation: 'auth'}},
 { path:'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule), data: { animation: 'admin'}},
 { path:'users', loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule), data: { animation: 'user'}},
-{path:'pacientes', component:PacientesComponent, pathMatch:'full'},
-{path:'paciente/historia', component:PacienteHistoriaComponent, pathMatch:'full'},
+{path:'pacientes', component:PacientesComponent, pathMatch:'full', data: { animation: 'pacientes' }},
 
 {path:'**', redirectTo:'bienvenida', pathMatch:'full'}];
 

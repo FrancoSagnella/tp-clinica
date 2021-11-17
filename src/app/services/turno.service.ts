@@ -7,6 +7,7 @@ import { FirestoreService } from './firestore.service';
 import { map } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,30 @@ export class TurnoService {
   {
     return this.referenciaColeccion.snapshotChanges().pipe(
       map(actions => actions.map(a => a.payload.doc.data() as Turno))
+    )
+  }
+
+  traerEntreFechas(desde:number, hasta:number)
+  {
+    let reference = this.afs.collection('turnos', ref => ref.where('fecha', '>=', desde).where('fecha', '<=', hasta));
+    return reference.snapshotChanges().pipe(
+      map(actions =>  actions.map(a => a.payload.doc.data() as Turno))
+    )
+  }
+
+  traerFechaDesde(desde:number)
+  {
+    let reference = this.afs.collection('turnos', ref => ref.where('fecha', '>=', desde));
+    return reference.snapshotChanges().pipe(
+      map(actions =>  actions.map(a => a.payload.doc.data() as Turno))
+    )
+  }
+
+  traerFechaHasta(hasta:number)
+  {
+    let reference = this.afs.collection('turnos', ref => ref.where('fecha', '<=', hasta));
+    return reference.snapshotChanges().pipe(
+      map(actions =>  actions.map(a => a.payload.doc.data() as Turno))
     )
   }
 

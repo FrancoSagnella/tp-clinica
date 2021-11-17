@@ -51,6 +51,14 @@ import { HistoriaClinicaComponent } from './components/historia-clinica/historia
 import { PacientesComponent } from './pages/pacientes/pacientes.component';
 import { PacienteHistoriaComponent } from './pages/paciente-historia/paciente-historia.component';
 import { PipesModule } from './pipes/pipes.module';
+import { ReporteIngresosComponent } from './components/reportes/reporte-ingresos/reporte-ingresos.component';
+import { ReporteTurnosEspecialidadComponent } from './components/reportes/reporte-turnos-especialidad/reporte-turnos-especialidad.component';
+import { ReporteTurnosDiasComponent } from './components/reportes/reporte-turnos-dias/reporte-turnos-dias.component';
+import { ReporteTurnosSeleccionadosComponent } from './components/reportes/reporte-turnos-seleccionados/reporte-turnos-seleccionados.component';
+import { ReporteTurnosFinalizadosComponent } from './components/reportes/reporte-turnos-finalizados/reporte-turnos-finalizados.component';
+import { SoloNumerosDirective } from './directivas/solo-numeros.directive';
+import { LargoMaximoDirective } from './directivas/largo-maximo.directive';
+
 @NgModule({
   declarations: [
     AppComponent,

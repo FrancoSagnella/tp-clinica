@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { LogIngresos } from 'src/app/clases/logIngresos';
 
 @Component({
   selector: 'app-login',
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
               {
                 this.authSvc.currentUser = {DNI:data.DNI, apellido:data.apellido, contrasenia:data.contrasenia, edad:data.edad, foto:data.foto, foto2:data.foto2, id:data.id, mail:data.mail, nombre:data.nombre, obraSocial:data.obraSocial, perfil:data.perfil, verificado:true};
                 this.firestore.actualizar('usuarios', this.authSvc.currentUser.id, this.authSvc.currentUser).then(()=>{
+                  this.guardarLog(this.authSvc.currentUser);
                   this.router.navigateByUrl('/bienvenida');
                   this.spinner.hide();
                   Swal.fire({
@@ -66,6 +68,7 @@ export class LoginComponent implements OnInit {
                   {
                     this.authSvc.currentUser = {DNI:data.DNI, apellido:data.apellido, aprobado:data.aprobado, contrasenia:data.contrasenia, edad:data.edad, especialidad:data.especialidad, foto:data.foto, id:data.id, mail:data.mail, nombre:data.nombre, perfil:data.perfil, verificado:true, diasLaborables:data.diasLaborables, horario:data.horario};
                     this.firestore.actualizar('usuarios', this.authSvc.currentUser.id, this.authSvc.currentUser).then(async ()=>{
+                      this.guardarLog(this.authSvc.currentUser);
                       this.router.navigateByUrl('/bienvenida');
                       this.spinner.hide();
                       Swal.fire({
@@ -107,7 +110,7 @@ export class LoginComponent implements OnInit {
           else
           {
             this.authSvc.currentUser = {DNI:data.DNI, apellido:data.apellido, contrasenia:data.contrasenia, edad:data.edad, foto:data.foto, id:data.id, mail:data.mail, nombre:data.nombre, perfil:data.perfil};
-
+            this.guardarLog(this.authSvc.currentUser);
             this.router.navigateByUrl('/bienvenida');
             this.spinner.hide();
             Swal.fire({
@@ -134,5 +137,14 @@ export class LoginComponent implements OnInit {
   }
   seleccionarUsuario(email:string, password:string){
     this.loginForm.setValue({email:email, password:password});
+  }
+
+  guardarLog(usuario:any)
+  {
+    let fecha = new Date();
+
+    let log:LogIngresos = {idUsuario:usuario.id, fecha:fecha.getDate()+'/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear(), hora:fecha.getHours()+':'+fecha.getMinutes()+':'+fecha.getSeconds()};
+
+    this.firestore.crear('logsIngreso', log);
   }
 }
