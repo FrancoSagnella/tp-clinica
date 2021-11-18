@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PdfService {
 
-  constructor() { }
+  constructor(private spinner:NgxSpinnerService) { }
 
   descargarPdf(nombreArchivo:string, divImprimir:string)
   {
+    this.spinner.show();
+
     const DATA: any = document.getElementById(divImprimir);
     const doc = new jsPDF('p', 'pt', 'a4');
     const options = {
@@ -41,6 +45,7 @@ export class PdfService {
       })
       .then((docResult) => {
         docResult.save(nombreArchivo);
+        this.spinner.hide();
       })
   }
 }
